@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import model.DAO.ChannelDAO;
+import model.dao.ChannelDAO;
 import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 

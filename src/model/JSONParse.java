@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-import model.DTO.ChannelDTO;
+import model.dto.ChannelDTO;
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;

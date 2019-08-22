@@ -1,0 +1,42 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from ControllerService WSDL service -->
+
+  <service name="Controller" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://controller"/>
+      <parameter name="wsdlServiceElement" value="ControllerService"/>
+      <parameter name="schemaQualified" value="http://controller,http://dto.model"/>
+      <parameter name="wsdlServicePort" value="Controller"/>
+      <parameter name="className" value="controller.ControllerSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="Controller"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="main" qname="operNS:main" xmlns:operNS="http://controller" soapAction="" >
+        <parameter qname="pns:args" xmlns:pns="http://controller" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="addAreaFromFile" qname="operNS:addAreaFromFile" xmlns:operNS="http://controller" soapAction="" >
+      </operation>
+      <operation name="addArea" qname="operNS:addArea" xmlns:operNS="http://controller" soapAction="" >
+        <parameter qname="pns:area" xmlns:pns="http://controller" type="tns:AreaDTO" xmlns:tns="http://dto.model"/>
+      </operation>
+      <parameter name="allowedMethods" value="addAreaFromFile main addArea"/>
+
+      <typeMapping
+        xmlns:ns="http://dto.model"
+        qname="ns:AreaDTO"
+        type="java:model.dto.AreaDTO"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>
