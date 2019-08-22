@@ -40,6 +40,17 @@ public class DBUtil {
 			s.printStackTrace();
 		}
 	}
+	
+	public static void close(Statement stmt) {
+		try {
+			if (stmt != null) {
+				stmt.close();
+				stmt = null;
+			}
+		} catch (SQLException s) {
+			s.printStackTrace();
+		}
+	}
 
 	// SELECT 자원반환
 	public static void close(Connection con, Statement stmt, ResultSet rset) {
