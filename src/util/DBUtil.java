@@ -36,6 +36,17 @@ public class DBUtil {
 			s.printStackTrace();
 		}
 	}
+	
+	public static void close(Statement stmt) {
+		try {
+			if (stmt != null) {
+				stmt.close();
+				stmt = null;
+			}
+		} catch (SQLException s) {
+			s.printStackTrace();
+		}
+	}
 
 	// SELECT �옄�썝諛섑솚
 	public static void close(Connection con, Statement stmt, ResultSet rset) {

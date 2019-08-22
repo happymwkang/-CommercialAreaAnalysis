@@ -33,6 +33,8 @@ public class ChannelDAO {
 				pstmt.setDouble(12, channelInfo.getFrcShopCnt());
 				
 				int result = pstmt.executeUpdate();
+				DBUtil.close(pstmt);
+				
 				if (result != 1) {
 					return result;
 				}
