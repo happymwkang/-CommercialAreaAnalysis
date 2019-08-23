@@ -6,9 +6,9 @@ import lombok.NoArgsConstructor;
 
 @Data@NoArgsConstructor@AllArgsConstructor
 public class SalesDTO {
-	private String division;//상권구분 1
+	//private String division;//상권구분 1
 	private String id;
-	private String name;
+	//private String name;
 	private String year;
 	private String quater;
 	private String business;//업종 6
