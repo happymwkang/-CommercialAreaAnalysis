@@ -77,6 +77,26 @@ create table sales(
 	storeNum VARCHAR2(100)
 );
 
+create table ft
+(
+	area_id VARCHAR2(100),
+	year VARCHAR2(100),
+	quater VARCHAR2(100),
+	sex VARCHAR2(100),
+	age VARCHAR2(100),
+	times VARCHAR2(100),
+	day VARCHAR2(100),
+	ft VARCHAR2(100)
+);
 
+create table pop
+(
+	area_id VARCHAR2(100),
+	year VARCHAR2(100),
+	quater VARCHAR2(100),
+	sex VARCHAR2(100),
+	age VARCHAR2(100),
+	pop VARCHAR2(100)
+);
 
 ALTER TABLE CHANNEL  ADD FOREIGN KEY (area_id) REFERENCES area  (area_id);
