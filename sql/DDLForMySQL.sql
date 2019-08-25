@@ -17,8 +17,9 @@ CREATE TABLE CHANNEL
 );
 
 create table area(
+	division_code varchar(100),
 	division_name varchar(100),
-	area_id varchar(20) primary key,
+	area_code varchar(20) primary key,
 	area_name varchar(100),
     sigungu varchar(100)
     character set utf8
@@ -101,5 +102,30 @@ create table pop
 	age varchar(100),
 	pop varchar(100)
 );
+
+drop procedure if exists resPopByAge;
+delimiter $$
+create procedure resPopByAge(
+	in year varchar(100),
+    in quater varchar(100),
+    in area_id varchar(100),
+    in sex varchar(100),
+    out res10  varchar(100),
+    out res20  varchar(100),
+    out res30  varchar(100),
+    out res40  varchar(100),
+    out res50  varchar(100),
+    out res60  varchar(100)
+)
+begin
+	select pop into res10 from pop where year=year and area_id=area_id and quater=quater and sex='FAG' and age = 10;
+    select pop into res20 from pop where year=year and area_id=area_id and quater=quater and sex='FAG' and age = 20;
+    select pop into res30 from pop where year=year and area_id=area_id and quater=quater and sex='FAG' and age = 30;
+    select pop into res40 from pop where year=year and area_id=area_id and quater=quater and sex='FAG' and age = 40;
+    select pop into res50 from pop where year=year and area_id=area_id and quater=quater and sex='FAG' and age = 50;
+    select pop into res60 from pop where year=year and area_id=area_id and quater=quater and sex='FAG' and age = 60;
+end$$
+delimiter ;
+    
 
 ALTER TABLE CHANNEL  ADD FOREIGN KEY (area_id) REFERENCES area  (area_id);

@@ -23,6 +23,7 @@ import model.dao.SalesDAO;
 import model.dto.AreaDTO;
 import model.dto.PopDTO;
 import model.dto.SalesDTO;
+import model.dto.PopCompDTO;
 
 public class Service {
 	private static AreaDAO areaDAO = AreaDAO.getInstance();
@@ -36,10 +37,6 @@ public class Service {
 	public static Service getInstance() {
 		return instance;
 	}
-	public boolean addArea(AreaDTO area) throws SQLException {
-		return areaDAO.addArea(area);
-	}
-	
 	public static HashMap getSigunguCode() throws SQLException{
 		HashMap<String,String> matcher = new HashMap();
 		JSONParser parser = new JSONParser();
@@ -91,7 +88,7 @@ public class Service {
 		for(int i = 0 ; i < obj3.size(); i++) {
 			
 			JSONObject j =(JSONObject) obj3.get(i);
-			AreaDTO nArea = new AreaDTO((String)j.get("TRDAR_SE_CD_NM"),Integer.parseInt((String)j.get("TRDAR_CD")), (String)j.get("TRDAR_CD_NM"),(String)matcher.get((String)j.get("SIGNGU_CD")));
+			AreaDTO nArea = new AreaDTO((String)j.get("TRDAR_SE_CD"),(String)j.get("TRDAR_SE_CD_NM"),Integer.parseInt((String)j.get("TRDAR_CD")), (String)j.get("TRDAR_CD_NM"),(String)matcher.get((String)j.get("SIGNGU_CD")));
 //			System.out.println(nArea);
 			areas.add(nArea);
 		}
@@ -121,7 +118,7 @@ public class Service {
 
 			for(int i = 0 ; i < obj3.size(); i++) {
 				JSONObject j =(JSONObject) obj3.get(i);
-				AreaDTO nArea = new AreaDTO((String)j.get("TRDAR_SE_CD_NM"),Integer.parseInt((String)j.get("TRDAR_CD")), (String)j.get("TRDAR_CD_NM"),(String)matcher.get((String)j.get("SIGNGU_CD")));
+				AreaDTO nArea = new AreaDTO((String)j.get("TRDAR_SE_CD"),(String)j.get("TRDAR_SE_CD_NM"),Integer.parseInt((String)j.get("TRDAR_CD")), (String)j.get("TRDAR_CD_NM"),(String)matcher.get((String)j.get("SIGNGU_CD")));
 //				System.out.println(nSales);
 				areas.add(nArea);
 			}
@@ -152,7 +149,7 @@ public class Service {
 
 		for(int i = 0 ; i < obj3.size(); i++) {
 			JSONObject j =(JSONObject) obj3.get(i);
-			AreaDTO nArea = new AreaDTO((String)j.get("TRDAR_SE_CD_NM"),Integer.parseInt((String)j.get("TRDAR_CD")), (String)j.get("TRDAR_CD_NM"),(String)matcher.get((String)j.get("SIGNGU_CD")));
+			AreaDTO nArea = new AreaDTO((String)j.get("TRDAR_SE_CD"),(String)j.get("TRDAR_SE_CD_NM"),Integer.parseInt((String)j.get("TRDAR_CD")), (String)j.get("TRDAR_CD_NM"),(String)matcher.get((String)j.get("SIGNGU_CD")));
 //			System.out.println(nSales);
 			areas.add(nArea);
 		}
@@ -661,19 +658,22 @@ public class Service {
 		return inserted;
 	}
 	
-	
-	
-	
-	public static void main(String[] args) {
-		try {
-			readAreasFromAPI();
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}//static 지우기
-		
-		
+
+	public PopCompDTO getPop(String year, String quater, String areaId) throws SQLException {
+		return popDAO.getPop(year, quater, areaId);
 	}
+	
+	
+//	public static void main(String[] args) {
+//		try {
+//			readAreasFromAPI();
+//			
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}//static 지우기
+//		
+//		
+//	}
 		
 }

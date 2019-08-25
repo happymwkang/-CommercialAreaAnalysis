@@ -1,8 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.dto.AreaDTO;
+import model.dto.PopCompDTO;
 import service.Service;
 
 @WebServlet("/commercial.do")
@@ -38,7 +36,8 @@ public class Controller extends HttpServlet {
 				System.out.println("시작");
 				readAreasFromAPI();
 				System.out.println("끝");
-			}else if(command.equals("activist")){
+			}else if(command.equals("getPopulationComposition")){
+				getPopulationComposition(request,response);
 			}else if(command.equals("recipient")){
 			}else if(command.equals("activistInsert")){
 			}else if(command.equals("activistUpdateReq")){
@@ -52,10 +51,14 @@ public class Controller extends HttpServlet {
 		}
 	}
 	
-	public static void addArea(AreaDTO area) {
+	public static void getPopulationComposition(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("1");
 		try {
-			boolean result = service.addArea(area);
-		} catch (SQLException e) {
+			PopCompDTO result = service.getPop("2018","1","1000001");
+			request.setAttribute("popComp", result);
+			request.getRequestDispatcher("popCompChart.jsp").forward(request, response);
+			System.out.println(result);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -68,5 +71,9 @@ public class Controller extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	
+//	public static void main(String[] args) {
+//		getPopulationComposition();
+//	}
 
 }
