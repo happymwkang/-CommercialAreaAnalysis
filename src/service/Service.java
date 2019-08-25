@@ -659,8 +659,8 @@ public class Service {
 	}
 	
 
-	public PopCompDTO getPop(String year, String quater, String areaId) throws SQLException {
-		return popDAO.getPop(year, quater, areaId);
+	public String getPop(String year, String quater, String areaId) throws SQLException {
+		return popDAO.getPop(year, quater, areaId).toString();
 	}
 	
 	

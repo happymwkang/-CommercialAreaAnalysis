@@ -54,7 +54,7 @@ public class Controller extends HttpServlet {
 	public static void getPopulationComposition(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("1");
 		try {
-			PopCompDTO result = service.getPop("2018","1","1000001");
+			String result = service.getPop("2018","1","1000001");
 			request.setAttribute("popComp", result);
 			request.getRequestDispatcher("popCompChart.jsp").forward(request, response);
 			System.out.println(result);

@@ -9,8 +9,8 @@
 	src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
 	google.charts.load('current', {'packages' : [ 'corechart' ]});
-	function drawChart(chartData) {
-		var data = google.visualization.arrayToDataTable(chartData);
+	function drawChart() {
+		var data = google.visualization.arrayToDataTable(${requestScope.popComp});
 		var options = {
 			title : 'My Daily Activities'
 		};
@@ -22,27 +22,30 @@
 	
 	
 	function ajaxJSON() {
+		var a = [1,2,3];
+		console.log(typeof(a));
+		console.log(${requestScope.popComp}[0]);
+		console.log(typeof(${requestScope.popComp}));
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				var chartData = this.responseText;
+				var chartData = ${requestScope.popComp};
 				alert(chartData);
-				drawChart(eval(chartData));
+				drawChart(chartData);
 			}
 		};
 	}
 	function print(){
 		 
-
-		console.log(eval(${requestScope.popComp}));
-		console.log(typeof(${requestScope.popComp}));
-		console.log(typeof(eval(${requestScope.popComp})));
+		var a = ${requestScope.popComp};
+		var b = a[0];
+		console.log(a);
 	}
 	//ajaxJSON();
 </script>
 </head>
 <body>
-	<button onclick="print()">클릭</button>
+	<button onclick="drawChart()">클릭</button>
 	<div id="piechart" style="width: 900px; height: 500px;"></div>
 
 </body>

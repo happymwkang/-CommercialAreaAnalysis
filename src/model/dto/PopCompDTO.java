@@ -12,4 +12,23 @@ public class PopCompDTO {
 	private int a40;
 	private int a50;
 	private int a60;
+	
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[['나이', '상주인구'],");
+		builder.append("['10  대' ,");
+		builder.append(a10);
+		builder.append("],[ '20 대' ,");
+		builder.append(a20);
+		builder.append("],[ '30 대' ,");
+		builder.append(a30);
+		builder.append("],[ '40 대' ,");
+		builder.append(a40);
+		builder.append("],[ '50 대' ,");
+		builder.append(a50);
+		builder.append("],[ '60 대' ,");
+		builder.append(a60);
+		builder.append("]]");
+		return builder.toString();
+	}
 }
