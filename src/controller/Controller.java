@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.dto.AreaDTO;
 import service.Service;
 
-@WebServlet("/controller")
+@WebServlet("/commercial.do")
 public class Controller extends HttpServlet {
 	private static Service service = Service.getInstance();
 	
@@ -36,7 +36,7 @@ public class Controller extends HttpServlet {
 			if(command.equals("probonoProjectAll")){
 			}else if(command.equals("insertAreas")){
 				System.out.println("시작");
-				addAreaFromFile();
+				readAreasFromAPI();
 				System.out.println("끝");
 			}else if(command.equals("activist")){
 			}else if(command.equals("recipient")){
@@ -60,24 +60,11 @@ public class Controller extends HttpServlet {
 		}
 	}
 	
-	public static void addAreaFromFile() {
-		ArrayList<AreaDTO> areas = null;
+	public static void readAreasFromAPI() {
 		System.out.println("1");
 		try {
-			areas = service.readAreaFromFile();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		System.out.println("2");
-		System.out.println(areas.get(0));
-		if(areas==null) {
-			System.out.println("fail");
-			;
-		}
-		try {
-			service.addAreas(areas);
+			int result = service.readAreasFromAPI();
 		} catch (Exception e) {
-			System.out.println("실패");
 			e.printStackTrace();
 		}
 	}

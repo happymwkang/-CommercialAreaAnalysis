@@ -9,6 +9,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -20,7 +21,6 @@ import model.dao.FtDAO;
 import model.dao.PopDAO;
 import model.dao.SalesDAO;
 import model.dto.AreaDTO;
-import model.dto.FtDTO;
 import model.dto.PopDTO;
 import model.dto.SalesDTO;
 
@@ -39,72 +39,131 @@ public class Service {
 	public boolean addArea(AreaDTO area) throws SQLException {
 		return areaDAO.addArea(area);
 	}
-	public boolean addAreas(ArrayList<AreaDTO> area) throws SQLException {
-		return areaDAO.addAreas(area);
-	}
 	
-	public ArrayList<AreaDTO> readAreaFromFile() throws SQLException{
+	public static HashMap getSigunguCode() throws SQLException{
+		HashMap<String,String> matcher = new HashMap();
 		JSONParser parser = new JSONParser();
 		ArrayList<AreaDTO> area = new ArrayList<>();
 		try {
-			Object obj = parser.parse(new FileReader("C:\\Users\\Playdata\\Downloads\\commercialArea.json"));
+			Object obj = parser.parse(new FileReader("C:\\Users\\choi\\Desktop\\git\\CommercialAreaAnalysis\\sigungu.json"));
 			
 			JSONObject jsonObject = (JSONObject) obj;
 			JSONArray arr = (JSONArray) jsonObject.get("DATA");
 			for (int i = 0 ; i<arr.size(); i++) {
 				JSONObject j = (JSONObject) arr.get(i);
 //				System.out.println(j);
-				AreaDTO nArea = new AreaDTO((String)j.get("trdar_se_cd_nm"),Integer.parseInt((String)j.get("trdar_cd")), (String)j.get("trdar_cd_nm"));
-				//addArea(nArea);
-				area.add(nArea);
+				matcher.put((String)j.get("sig_cd"), (String)j.get("sig_kor_nm"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return area;
+		return matcher;
 	}
 	
-	
-	
-	//Sales
-	public static ArrayList<SalesDTO> readSalesFromFile() throws SQLException{
+
+	public static int readAreasFromAPI() throws SQLException, IOException, ParseException{
+		HashMap matcher = getSigunguCode();
+		
+		BufferedReader br = null;
 		JSONParser parser = new JSONParser();
-		ArrayList<SalesDTO> sales = new ArrayList<>();
+		ArrayList<AreaDTO> areas = new ArrayList<>();
+		JSONObject obj = null;
+		
+		int inserted = 0;
+		
+		int start = 1;
+//		int end = 3;
+		int end = start + 998;
+		
+		URL url = new URL("http://openapi.seoul.go.kr:8088/74576a536f7368653330436847626c/json/TbgisTrdarRelm/"+start+"/"+end+"/2018");
+		
+		HttpURLConnection urlconnection = (HttpURLConnection) url.openConnection();
+		urlconnection.setRequestMethod("GET");
+		br = new BufferedReader(new InputStreamReader(urlconnection.getInputStream(), "UTF-8"));
+		
+		obj = (JSONObject) parser.parse(br.readLine());
+		JSONObject obj2 = (JSONObject) obj.get("TbgisTrdarRelm");
+		long dataNum = (long) obj2.get("list_total_count");
+//		dataNum = 4;
+		JSONArray obj3 = (JSONArray) obj2.get("row");
+
+		for(int i = 0 ; i < obj3.size(); i++) {
+			
+			JSONObject j =(JSONObject) obj3.get(i);
+			AreaDTO nArea = new AreaDTO((String)j.get("TRDAR_SE_CD_NM"),Integer.parseInt((String)j.get("TRDAR_CD")), (String)j.get("TRDAR_CD_NM"),(String)matcher.get((String)j.get("SIGNGU_CD")));
+//			System.out.println(nArea);
+			areas.add(nArea);
+		}
 		try {
-			Object obj = parser.parse(new FileReader("C:\\Users\\Playdata\\Downloads\\maechul2018.json"));
-			
-			JSONObject jsonObject = (JSONObject) obj;
-			JSONArray arr = (JSONArray) jsonObject.get("DATA");
-			System.out.println(arr.size());
-			for (int i = 0 ; i<10; i++) {
-				JSONObject j = (JSONObject) arr.get(i);
-//				System.out.println(j);
-//				System.out.println(j.get("tues_selng_amt"));
-//				System.out.println((String)j.get("tmzon_06_11_selng_amt"));
-			
-				
-//				SalesDTO nSales = new SalesDTO((String)j.get("TRDAR_SE_CD_NM"),(String)j.get("TRDAR_CD"), (String)j.get("TRDAR_CD_NM"),(String)j.get("STDR_YY_CD"),(String)j.get("STDR_QU_CD"),
-//						(String)j.get("SVC_INDUTY_CD_NM"),(String)j.get("THSMON_SELNG_AMT"),(String)j.get("MDWK_SELNG_AMT"),(String)j.get("WKEND_SELNG_AMT"),(String)j.get("MON_SELNG_AMT"),
-//						(String)j.get("TUES_SELNG_AMT"),(String)j.get("WED_SELNG_AMT"),(String)j.get("THUR_SELNG_AMT"),(String)j.get("FRI_SELNG_AMT"),(String)j.get("SAT_SELNG_AMT"),
-//						(String)j.get("SUN_SELNG_AMT"),(String)j.get("TMZON_00_06_SELNG_AMT"),(String)j.get("TMZON_06_11_SELNG_AMT"),(String)j.get("TMZON_11_14_SELNG_AMT"),(String)j.get("TMZON_14_17_SELNG_AMT"),
-//						(String)j.get("TMZON_17_21_SELNG_AMT"),(String)j.get("TMZON_21_24_SELNG_AMT"),(String)j.get("ML_SELNG_AMT"),(String)j.get("FML_SELNG_AMT"),(String)j.get("AGRDE_10_SELNG_AMT"),
-//						(String)j.get("AGRDE_20_SELNG_AMT"),(String)j.get("AGRDE_30_SELNG_AMT"),(String)j.get("AGRDE_40_SELNG_AMT"),(String)j.get("AGRDE_50_SELNG_AMT"),(String)j.get("AGRDE_60_SELNG_AMT"),
-//						(String)j.get("THSMON_SELNG_CO"),(String)j.get("MDWK_SELNG_CO"),(String)j.get("WKEND_SELNG_CO"),
-//						(String)j.get("MON_SELNG_CO"),(String)j.get("TUES_SELNG_CO"),(String)j.get("WED_SELNG_CO"),(String)j.get("THUR_SELNG_CO"),(String)j.get("FRI_SELNG_CO"),
-//						(String)j.get("SAT_SELNG_CO"),(String)j.get("SUN_SELNG_CO"),(String)j.get("TMZON_00_06_SELNG_CO"),(String)j.get("TMZON_06_11_SELNG_CO"),(String)j.get("TMZON_11_14_SELNG_CO"),
-//						(String)j.get("TMZON_14_17_SELNG_CO"),(String)j.get("TMZON_17_21_SELNG_CO"),(String)j.get("TMZON_21_24_SELNG_CO"),(String)j.get("ML_SELNG_CO"),(String)j.get("FML_SELNG_CO"),
-//						(String)j.get("AGRDE_10_SELNG_CO"),(String)j.get("AGRDE_20_SELNG_CO"),(String)j.get("AGRDE_30_SELNG_CO"),(String)j.get("AGRDE_40_SELNG_CO"),(String)j.get("AGRDE_50_SELNG_CO"),
-//						(String)j.get("AGRDE_60_SELNG_CO"),(String)j.get("STOR_CO"));
-//						
-//				System.out.println(nSales);
-//				sales.add(nSales);
-			}
+			inserted += areaDAO.addAreas(areas);
+			areas = new ArrayList<>();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return sales;
+		while(end+998 < dataNum) {
+			
+			start = end+1;
+			end=start+998;
+			
+			url = new URL("http://openapi.seoul.go.kr:8088/74576a536f7368653330436847626c/json/TbgisTrdarRelm/"+start+"/"+end+"/2018");
+			
+			urlconnection = (HttpURLConnection) url.openConnection();
+			urlconnection.setRequestMethod("GET");
+			br = new BufferedReader(new InputStreamReader(urlconnection.getInputStream(), "UTF-8"));
+			
+			
+			
+			obj = (JSONObject) parser.parse(br.readLine());
+			obj2 = (JSONObject) obj.get("TbgisTrdarRelm");
+			obj3 = (JSONArray) obj2.get("row");
+
+			for(int i = 0 ; i < obj3.size(); i++) {
+				JSONObject j =(JSONObject) obj3.get(i);
+				AreaDTO nArea = new AreaDTO((String)j.get("TRDAR_SE_CD_NM"),Integer.parseInt((String)j.get("TRDAR_CD")), (String)j.get("TRDAR_CD_NM"),(String)matcher.get((String)j.get("SIGNGU_CD")));
+//				System.out.println(nSales);
+				areas.add(nArea);
+			}
+			
+			try {
+				inserted += areaDAO.addAreas(areas);
+				areas = new ArrayList<>();
+				System.out.println(inserted);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		start = end+1;
+		end=(int) dataNum;
+		
+		url = new URL("http://openapi.seoul.go.kr:8088/74576a536f7368653330436847626c/json/TbgisTrdarRelm/"+start+"/"+end+"/2018");
+		
+		urlconnection = (HttpURLConnection) url.openConnection();
+		urlconnection.setRequestMethod("GET");
+		br = new BufferedReader(new InputStreamReader(urlconnection.getInputStream(), "UTF-8"));
+		
+		
+		obj = (JSONObject) parser.parse(br.readLine());
+		obj2 = (JSONObject) obj.get("TbgisTrdarRelm");
+		obj3 = (JSONArray) obj2.get("row");
+
+		for(int i = 0 ; i < obj3.size(); i++) {
+			JSONObject j =(JSONObject) obj3.get(i);
+			AreaDTO nArea = new AreaDTO((String)j.get("TRDAR_SE_CD_NM"),Integer.parseInt((String)j.get("TRDAR_CD")), (String)j.get("TRDAR_CD_NM"),(String)matcher.get((String)j.get("SIGNGU_CD")));
+//			System.out.println(nSales);
+			areas.add(nArea);
+		}
+//		System.out.println(sales);
+		try {
+			inserted += areaDAO.addAreas(areas);
+			areas = new ArrayList<>();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return inserted;
 	}
 	
 	public static int readSalesFromAPI() throws SQLException, IOException, ParseException{
@@ -607,7 +666,8 @@ public class Service {
 	
 	public static void main(String[] args) {
 		try {
-			readPopFromAPI();
+			readAreasFromAPI();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

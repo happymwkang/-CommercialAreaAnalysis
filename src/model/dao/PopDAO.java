@@ -24,7 +24,7 @@ public class PopDAO {
 		try{
 			con = DBUtil.getConnection();
 			for(PopDTO s : pops) {
-				pstmt = con.prepareStatement("insert into pop values(?,?,?,?,?,?)");
+				pstmt = con.prepareStatement("insert into commercial.pop values(?,?,?,?,?,?)");
 				
 				pstmt.setString(1, s.getId());
 				pstmt.setString(2, s.getYear());

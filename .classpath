@@ -8,6 +8,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
 		<attributes>
+			<attribute name="module" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
@@ -17,11 +18,9 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/0.encore/00.lib/ojdbc6.jar"/>
-	<classpathentry kind="lib" path="C:/0.encore/99.devEnv/tomcat8.5/lib/servlet-api.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="https://docs.oracle.com/javaee/5/api/"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="C:/study/99.dev env/apache-tomcat-8.5/apache-tomcat-8.5.45/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="C:/study/00.lib/lombok.jar"/>
+	<classpathentry kind="lib" path="C:/study/00.lib/mysql-connector-java-8.0.17.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
