@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import model.dao.AreaChangeDAO;
-import model.dao.ChannelDAO;
 import model.dao.FootTrafficDetailDAO;
 import net.sf.json.JSON;
 import net.sf.json.JSONObject;
@@ -67,8 +66,6 @@ public class APIToJSON {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-//	System.out.println(GetChannel());
-//	urlConfig(3);
 		}
 	}
 

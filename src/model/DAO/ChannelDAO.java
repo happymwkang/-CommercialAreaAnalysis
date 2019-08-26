@@ -78,11 +78,11 @@ public class ChannelDAO {
 		ArrayList<TestDTO> list = new ArrayList<TestDTO>();
 		try {
 				con = DBUtil.getConnection();
-				pstmt = con.prepareStatement("select year, sum(shopcnt) shopcnt from channel group by year, business_name");
+				pstmt = con.prepareStatement("select year,business_name, sum(shopcnt) shopcnt from channel group by year, business_name order by business_name");
 				rset = pstmt.executeQuery();
 				
 				while(rset.next()){
-					list.add( new TestDTO(rset.getString(1), rset.getDouble(2)));
+					list.add( new TestDTO(rset.getString(1), rset.getString(2), rset.getDouble(3)));
 				}
 		} finally {
 			DBUtil.close(con, pstmt, rset);

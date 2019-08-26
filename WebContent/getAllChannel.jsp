@@ -12,11 +12,12 @@
 [['year'<%out.print(", '점포수'],"); %>
 <c:forEach items="${requestScope.testChannel}" var="dataAll" varStatus="index"> 
 	<c:if test ="${index.last }">
-		<%out.print("'"); %>${dataAll.shopCnt}<%out.print("']"); %>
+	
+		<%out.print(""); %>${dataAll.shopCnt}<%out.print("]"); %>
 	</c:if>
 	<c:if test ="${!index.last }">
 		<%out.print("['"); %>${dataAll.year}<%out.print("',"); %>
-		<%out.print("'"); %>${dataAll.shopCnt}<%out.print("'],"); %>
+		<%out.print(""); %>${dataAll.shopCnt}<%out.print("],"); %>
 	</c:if> 
  	</c:forEach> 
  	]

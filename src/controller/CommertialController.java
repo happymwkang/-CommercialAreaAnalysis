@@ -61,7 +61,8 @@ public class CommertialController extends HttpServlet {
 			try {
 				System.out.println("실행되니111");
 				request.setAttribute("testChannel", CommertialService.testChannel());
-				url = "getAllChannel.jsp";
+				System.out.println(CommertialService.testChannel());
+				url = "googleChartTest1.jsp";
 			}catch(Exception s){
 				request.setAttribute("errorMsg", s.getMessage());
 			}
