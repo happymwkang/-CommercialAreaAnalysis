@@ -18,19 +18,22 @@ public class AreaChangeDAO {
 			
 			for (int j = 0; j < areaChanIx.size(); j++) {
 				AreaChangeDTO areaChanInfo = areaChanIx.get(j);
-				pstmt = con.prepareStatement("insert into AreaChangeIndex values(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+				pstmt = con.prepareStatement("insert into Area_Change_Index values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				pstmt.setString(1, areaChanInfo.getYear());
 				pstmt.setString(2, areaChanInfo.getQuarter());
-				pstmt.setString(3, areaChanInfo.getDivision());
-				pstmt.setString(4, areaChanInfo.getLevel2Name());
-				pstmt.setString(5, areaChanInfo.getAreaChangeNm());
-				pstmt.setString(6, areaChanInfo.getOpenAvg());
-				pstmt.setString(7, areaChanInfo.getCloseAvg());
-				pstmt.setString(8, areaChanInfo.getSeoulOpenAvg());
-				pstmt.setString(9, areaChanInfo.getSeoulCloseAvg());
+				pstmt.setString(3, areaChanInfo.getDivisionCd());
+				pstmt.setString(4, areaChanInfo.getDivisionNm());
+				pstmt.setString(5, areaChanInfo.getAreaCd());
+				pstmt.setString(6, areaChanInfo.getAreaNm());
+				pstmt.setString(7, areaChanInfo.getAreaChangeCd());
+				pstmt.setString(8, areaChanInfo.getAreaChangeNm());
+				pstmt.setString(9, areaChanInfo.getOpenAvg());
+				pstmt.setString(10, areaChanInfo.getCloseAvg());
+				pstmt.setString(11, areaChanInfo.getSeoulOpenAvg());
+				pstmt.setString(12, areaChanInfo.getSeoulCloseAvg());
 				
 				int result = pstmt.executeUpdate();
-				DBUtil.close(pstmt);
+				pstmt.close();
 				
 				if (result != 1) {
 					return result;

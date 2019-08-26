@@ -10,11 +10,13 @@ import lombok.NoArgsConstructor;
 public class FootTrafficDetailDTO {
 	private String year;
 	private String quarter;
-	private String level1Name;
-	private String level2Name;
+	private String divisionCd;
+	private String divisionNm;
+	private String areaCd;
+	private String areaNm;
 	private String sex;
+	private String age;
 	private String day;
 	private String times;
-	private String age;
-	private String ft;
+	private double ft;
 }

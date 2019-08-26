@@ -1,31 +1,25 @@
-package util;
+﻿package util;
 
-import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Properties;
 
 public class DBUtil {
-	static Properties propertiesInfo = new Properties();
-	static{ 
+	static {
 		try {
-			propertiesInfo.load( new FileInputStream("db.properties") );
-			Class.forName(propertiesInfo.getProperty("jdbc.driver"));
-		} catch (Exception e) {
-			e.printStackTrace();
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException c) {
+			c.printStackTrace();
 		}
 	}
 
-	public static Connection getConnection() throws SQLException{
-		return DriverManager.getConnection(propertiesInfo.getProperty("jdbc.url") , 
-											propertiesInfo.getProperty("jdbc.id"), 
-											propertiesInfo.getProperty("jdbc.pw"));
+	public static Connection getConnection() throws SQLException {
+		return DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:xe", "SCOTT", "TIGER");
 	}
 
-	// DML 자원반환
+	// DML용
 	public static void close(Connection con, Statement stmt) {
 		try {
 			if (stmt != null) {
@@ -40,21 +34,14 @@ public class DBUtil {
 			s.printStackTrace();
 		}
 	}
-	
-	public static void close(Statement stmt) {
-		try {
-			if (stmt != null) {
-				stmt.close();
-				stmt = null;
-			}
-		} catch (SQLException s) {
-			s.printStackTrace();
-		}
-	}
 
-	// SELECT 자원반환
+	// SELECT용
 	public static void close(Connection con, Statement stmt, ResultSet rset) {
 		try {
+			if (rset != null) {
+				rset.close();
+				rset = null;
+			}
 			if (stmt != null) {
 				stmt.close();
 				stmt = null;
@@ -63,11 +50,6 @@ public class DBUtil {
 				con.close();
 				con = null;
 			}
-			if (rset != null) {
-				rset.close();
-				rset = null;
-			}
-			close(con, stmt);
 		} catch (SQLException s) {
 			s.printStackTrace();
 		}
