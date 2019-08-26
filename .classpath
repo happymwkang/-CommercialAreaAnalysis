@@ -19,10 +19,9 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/study/99.dev env/apache-tomcat-8.5/apache-tomcat-8.5.45/lib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="C:/study/00.lib/lombok.jar"/>
-	<classpathentry kind="lib" path="C:/study/00.lib/mysql-connector-java-8.0.17.jar"/>
-	<classpathentry kind="lib" path="C:/study/00.lib/taglibs-standard-impl-1.2.5.jar"/>
-	<classpathentry kind="lib" path="C:/study/00.lib/taglibs-standard-jstlel-1.2.5.jar"/>
+	<classpathentry kind="lib" path="C:/0.encore/03.ServletJSP/step10_miniProject_s/WebContent/WEB-INF/lib/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="C:/0.encore/03.ServletJSP/step10_miniProject_s/WebContent/WEB-INF/lib/taglibs-standard-impl-1.2.5.jar"/>
+	<classpathentry kind="lib" path="C:/0.encore/03.ServletJSP/step10_miniProject_s/WebContent/WEB-INF/lib/taglibs-standard-spec-1.2.5.jar"/>
+	<classpathentry kind="lib" path="C:/0.encore/99.devEnv/tomcat8.5/lib/servlet-api.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -6,7 +6,7 @@ CREATE TABLE CHANNEL
 (
   year VARCHAR2(100),
   quarter VARCHAR2(100),
-  area_id VARCHAR2(100),
+  area_code VARCHAR2(100),
   business VARCHAR2(100),
   shopCnt NUMBER,
   similrCnt NUMBER,    
@@ -16,13 +16,15 @@ CREATE TABLE CHANNEL
 );
 
 create table area(
+	division_code varchar2(100),
 	division_name varchar2(100),
-	area_id varchar2(20) primary key,
-	area_name varchar2(100)
+	area_code varchar2(20) primary key,
+	area_name varchar2(100),
+    sigungu varchar2(100)
 );
 
 create table sales(
-	area_id VARCHAR2(100),
+	area_code VARCHAR2(100),
 	year VARCHAR2(100),
 	quater VARCHAR2(100),
 	business VARCHAR2(100),
@@ -79,7 +81,7 @@ create table sales(
 
 create table ft
 (
-	area_id VARCHAR2(100),
+	area_code VARCHAR2(100),
 	year VARCHAR2(100),
 	quater VARCHAR2(100),
 	sex VARCHAR2(100),
@@ -91,7 +93,7 @@ create table ft
 
 create table pop
 (
-	area_id VARCHAR2(100),
+	area_code VARCHAR2(100),
 	year VARCHAR2(100),
 	quater VARCHAR2(100),
 	sex VARCHAR2(100),
@@ -99,4 +101,8 @@ create table pop
 	pop VARCHAR2(100)
 );
 
-ALTER TABLE CHANNEL  ADD FOREIGN KEY (area_id) REFERENCES area  (area_id);
+alter table sales add constraint area_pk primary key(year, quater, area_code, business);
+
+ALTER TABLE sales  ADD FOREIGN KEY (area_code) REFERENCES area  (area_code);
+
+ALTER TABLE CHANNEL  ADD FOREIGN KEY (area_code) REFERENCES area  (area_code);

@@ -42,7 +42,7 @@ public class Service {
 		JSONParser parser = new JSONParser();
 		ArrayList<AreaDTO> area = new ArrayList<>();
 		try {
-			Object obj = parser.parse(new FileReader("C:\\Users\\choi\\Desktop\\git\\CommercialAreaAnalysis\\sigungu.json"));
+			Object obj = parser.parse(new FileReader("C:\\Users\\Playdata\\Desktop\\git\\CommercialAreaAnalysis\\sigungu.json"));
 			
 			JSONObject jsonObject = (JSONObject) obj;
 			JSONArray arr = (JSONArray) jsonObject.get("DATA");
@@ -659,8 +659,19 @@ public class Service {
 	}
 	
 
-	public String getPop(String year, String quater, String areaId) throws SQLException {
-		return popDAO.getPop(year, quater, areaId).toString();
+	public String getPopSet(String areaId) throws SQLException {
+		ArrayList<PopCompDTO> popSet =  popDAO.getPopSet(areaId);
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
+		builder.append(popSet.get(0).toString());
+		for(int i = 1 ; i<popSet.size() ; i++) {
+			builder.append(","+ popSet.get(i).toString());
+		}
+		builder.append("]");
+		
+		
+		return builder.toString();
 	}
 	
 	

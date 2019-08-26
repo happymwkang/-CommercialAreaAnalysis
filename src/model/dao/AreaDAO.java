@@ -24,7 +24,8 @@ public class AreaDAO {
 			con = DBUtil.getConnection();
 			for(AreaDTO a : area) {
 				
-				pstmt = con.prepareStatement("insert into commercial.area values(?,?, ?, ?,?)");
+//				pstmt = con.prepareStatement("insert into commercial.area values(?,?, ?, ?,?)");
+				pstmt = con.prepareStatement("insert into area values(?,?, ?, ?,?)");
 				
 				pstmt.setString(1, a.getDivisionId());
 				pstmt.setString(2, a.getDivision());
