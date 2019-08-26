@@ -22,6 +22,7 @@ import model.dao.PopDAO;
 import model.dao.SalesDAO;
 import model.dto.AreaDTO;
 import model.dto.PopDTO;
+import model.dto.SalesAmountDTO;
 import model.dto.SalesDTO;
 import model.dto.PopCompDTO;
 
@@ -674,10 +675,36 @@ public class Service {
 		return builder.toString();
 	}
 	
+	public static String getSalesAmount(String areaId) throws SQLException {
+		ArrayList<ArrayList<SalesAmountDTO>> results = salesDAO.getSalesAmount(areaId);
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
+		
+		for(int i = 0 ; i<results.size() ; i++) {
+			builder.append("[");
+			for(int j = 0 ; j<results.get(i).size(); j++) {
+				if(j!=results.get(i).size()-1) {
+					builder.append(results.get(i).get(j).toString()+",");
+				}else {
+					builder.append(results.get(i).get(j).toString());
+				}
+			}
+			if(i != results.size()-1) {
+				builder.append("],");
+			}else {
+				builder.append("]");
+			}
+		}
+		builder.append("]");
+		
+		return builder.toString();
+	}
+	
 	
 //	public static void main(String[] args) {
 //		try {
-//			readAreasFromAPI();
+//			System.out.println(getSalesAmount("1000001"));
 //			
 //		} catch (Exception e) {
 //			// TODO Auto-generated catch block

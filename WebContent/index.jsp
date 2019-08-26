@@ -26,6 +26,7 @@
 		src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
 		var index = -1;
+		var indexForSales = -1;
 		
 		google.charts.load('current', {'packages' : [ 'bar' ]});
 		function drawChart(c) {
@@ -49,6 +50,40 @@
 				'height':300
 			}
 			var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+			chart.draw(data, google.charts.Bar.convertOptions(options));
+		}
+		
+		function salesDay(c) {
+			if(c==1){
+				indexForSales+=1;
+			}else if(c==-1){
+				indexForSales-=1;
+			}
+			var raw = ${requestScope.salesAmounts}[indexForSales];
+			var chartData=[];
+			chartData.push(['업종','매출']);
+			console.log(${requestScope.salesAmounts});
+			console.log(raw);
+			
+			for(var r in raw){
+				chartData.push([raw[r][0][3],raw[r][1][1]]);
+				
+			}
+			console.log(chartData);
+			
+			var data = google.visualization.arrayToDataTable(chartData);
+			var options = {
+				title : chartData[0][1] + "년 " + chartData[0][2] + "분기 " + chartData[0][0] +" 지역의 상주인구",
+				backgroundColor: 'transparent',
+				legend: {textStyle: {color: 'white'}},
+				titleTextStyle: { color: 'white'},
+				hAxis: { textStyle: {color: 'white'} },
+				vAxis: { textStyle: {color: 'white'} },
+				colors : ['white'],
+				'width':400,
+				'height':300
+			}
+			var chart = new google.charts.Bar(document.getElementById('salesDay_material'));
 			chart.draw(data, google.charts.Bar.convertOptions(options));
 		}
 		
@@ -170,7 +205,7 @@
                         <!-- Tabs Content -->
                         <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="nav-places" role="tabpanel" aria-labelledby="nav-places-tab">
-                                <h6>What are you looking for?</h6>
+                                <h6>What are you looking for?</h6>getPopulationComposition
                                 <form action="commercial.do?command=getPopulationComposition" method="post" >
                                     <select class="custom-select">
                                         <option selected>Your Destinations</option>
@@ -389,104 +424,44 @@
     <!-- ***** Editor Pick Area End ***** -->
 
     <!-- ***** Features Destinations Area Start ***** -->
-    <section class="dorne-features-destinations-area">
+    <section class="dorne-features-destinations-area" style="height = 10000;">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="section-heading dark text-center">
                         <span></span>
-                        <h4>Featured destinations</h4>
+                        <h4>매출</h4>
                         <p>Editorâs pick</p>
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-12">
-                    <div class="features-slides owl-carousel">
-                        <!-- Single Features Area -->
-                        <div class="single-features-area">
-                            <img src="img/bg-img/feature-1.jpg" alt="">
-                            <!-- Price -->
-                            <div class="price-start">
-                                <p>FROM $59/night</p>
+                <div class="col-12 col-lg-6">
+                    <div class="single-editors-pick-area wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="editors-pick-info">
+                            <div class="places-total-destinations d-flex">
+                                <a href="#">New York</a>
+                                <a href="#">1643 Destinations</a>
                             </div>
-                            <div class="feature-content d-flex align-items-center justify-content-between">
-                                <div class="feature-title">
-                                    <h5>Ibiza</h5>
-                                    <p>Party</p>
-                                </div>
-                                <div class="feature-favourite">
-                                    <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-                                </div>
+                            <div>
+                            	<button onclick="salesDay(-1)">이전 분기</button>
+								<button onclick="salesDay(1)">다음 분기</button>
                             </div>
+                            <div id="salesDay_material"></div>
                         </div>
-                        <!-- Single Features Area -->
-                        <div class="single-features-area">
-                            <img src="img/bg-img/feature-2.jpg" alt="">
-                            <!-- Price -->
-                            <div class="price-start">
-                                <p>FROM $59/night</p>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="single-editors-pick-area wow fadeInUp" data-wow-delay="0.4s">
+                        <img src="img/bg-img/editor-2.jpg" alt="">
+                        <div class="editors-pick-info">
+                            <div class="places-total-destinations d-flex">
+                                <a href="#">Barcelona</a>
+                                <a href="#">943 Destinations</a>
                             </div>
-                            <div class="feature-content d-flex align-items-center justify-content-between">
-                                <div class="feature-title">
-                                    <h5>Paris</h5>
-                                    <p>Luxury</p>
-                                </div>
-                                <div class="feature-favourite">
-                                    <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single Features Area -->
-                        <div class="single-features-area">
-                            <img src="img/bg-img/feature-3.jpg" alt="">
-                            <!-- Price -->
-                            <div class="price-start">
-                                <p>FROM $59/night</p>
-                            </div>
-                            <div class="feature-content d-flex align-items-center justify-content-between">
-                                <div class="feature-title">
-                                    <h5>Lake Como</h5>
-                                    <p>Spectacular</p>
-                                </div>
-                                <div class="feature-favourite">
-                                    <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single Features Area -->
-                        <div class="single-features-area">
-                            <img src="img/bg-img/feature-4.jpg" alt="">
-                            <!-- Price -->
-                            <div class="price-start">
-                                <p>FROM $59/night</p>
-                            </div>
-                            <div class="feature-content d-flex align-items-center justify-content-between">
-                                <div class="feature-title">
-                                    <h5>Greece</h5>
-                                    <p>Sunny</p>
-                                </div>
-                                <div class="feature-favourite">
-                                    <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single Features Area -->
-                        <div class="single-features-area">
-                            <img src="img/bg-img/feature-5.jpg" alt="">
-                            <!-- Price -->
-                            <div class="price-start">
-                                <p>FROM $59/night</p>
-                            </div>
-                            <div class="feature-content d-flex align-items-center justify-content-between">
-                                <div class="feature-title">
-                                    <h5>Norway</h5>
-                                    <p>All Year round</p>
-                                </div>
-                                <div class="feature-favourite">
-                                    <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-                                </div>
+                            <div class="add-more">
+                                <a href="#">+</a>
                             </div>
                         </div>
                     </div>

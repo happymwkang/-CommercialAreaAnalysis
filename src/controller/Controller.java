@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -39,7 +40,8 @@ public class Controller extends HttpServlet {
 				System.out.println("끝");
 			}else if(command.equals("getPopulationComposition")){
 				getPopulationComposition(request,response);
-			}else if(command.equals("recipient")){
+			}else if(command.equals("getSalesAmount")){
+				getSalesAmount(request,response);
 			}else if(command.equals("activistInsert")){
 			}else if(command.equals("activistUpdateReq")){
 			}else if(command.equals("activistUpdate")){
@@ -57,8 +59,15 @@ public class Controller extends HttpServlet {
 		try {
 			String result = service.getPopSet("1000001");
 			request.setAttribute("popComp", result);
-			request.getRequestDispatcher("index.jsp").forward(request, response);
 			System.out.println(result);
+			//////////////////////
+			String result2 = service.getSalesAmount("1000001");
+			System.out.println(result2);
+			request.setAttribute("salesAmounts", result2);
+
+			
+			
+			request.getRequestDispatcher("index.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -68,6 +77,17 @@ public class Controller extends HttpServlet {
 		System.out.println("1");
 		try {
 			int result = service.readAreasFromAPI();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void getSalesAmount(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+		try {
+			String result = service.getSalesAmount("1000001");
+			System.out.println(result);
+			request.setAttribute("salesAmounts", result);
+			request.getRequestDispatcher("index.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

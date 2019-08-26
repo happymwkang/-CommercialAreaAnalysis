@@ -2,9 +2,12 @@ package model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import model.dto.PopCompDTO;
+import model.dto.SalesAmountDTO;
 import model.dto.SalesDTO;
 import util.DBUtil;
 
@@ -94,4 +97,92 @@ public class SalesDAO {
 		return num;
 	}
 	
+//	ArrayList<SalesAmountDTO>
+	public static ArrayList<ArrayList<SalesAmountDTO>> getSalesAmount(String areaId) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String[] yearSet = new String[] {"2018"};
+		String[] quaterSet = new String[] {"1","2","3","4"};
+		
+		ArrayList<ArrayList<SalesAmountDTO>> salesSet = new ArrayList<>();
+		
+		String areaName = "";
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement("select area_name from area where area_code = ?");
+			pstmt.setString(1, areaId);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				areaName=rset.getString(1);
+			}
+			//else notexist 던져야해요
+		} finally {
+			pstmt.close();
+		}
+		
+		for(String year : yearSet) {
+			for(String quater : quaterSet) {
+				ArrayList<SalesAmountDTO> salesQuater = new ArrayList<>();
+				try{
+					pstmt = con.prepareStatement("select * from sales where year=? and quater = ? and area_id = ?");
+					pstmt.setString(1, year);
+					pstmt.setString(2, quater);
+					pstmt.setString(3, areaId);
+					rset = pstmt.executeQuery();
+					while(rset.next()) {
+						SalesAmountDTO sales = new SalesAmountDTO(areaName,year, quater, null,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+						sales.setBusiness(rset.getString(4));
+						sales.setMonthSales(rset.getInt(5));
+						sales.setWkSales(rset.getInt(6));
+						sales.setWkendSales(rset.getInt(7));
+						sales.setMonSales(rset.getInt(8));
+						sales.setTueSales(rset.getInt(9));
+						sales.setWedSales(rset.getInt(10));
+						sales.setThuSales(rset.getInt(11));
+						sales.setFriSales(rset.getInt(12));
+						sales.setSatSales(rset.getInt(13));
+						sales.setSunSales(rset.getInt(14));
+						sales.setT0006Sales(rset.getInt(15));
+						sales.setT0611Sales(rset.getInt(16));
+						sales.setT1114Sales(rset.getInt(17));
+						sales.setT1417Sales(rset.getInt(18));
+						sales.setT1721Sales(rset.getInt(19));
+						sales.setT2124Sales(rset.getInt(20));
+						sales.setMSales(rset.getInt(21));
+						sales.setWSales(rset.getInt(22));
+						sales.setA10Sales(rset.getInt(23));
+						sales.setA20Sales(rset.getInt(24));
+						sales.setA30Sales(rset.getInt(25));
+						sales.setA40Sales(rset.getInt(26));
+						sales.setA50Sales(rset.getInt(27));
+						sales.setA60Sales(rset.getInt(28));
+						
+						salesQuater.add(sales);
+//						System.out.println(sales);
+					}
+				}finally {
+					pstmt.close();
+				}
+				salesSet.add(salesQuater);
+
+			}
+		}
+		
+			//json object value값 다 더해서 0이면 notexistexception 날리는 예외처리 해야함
+			
+		DBUtil.close(con, pstmt);
+		
+		return salesSet;
+	}
+	
+//	public static void main(String[] args) {
+//		try {
+//			getSalesAmount("1000001");
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 }
