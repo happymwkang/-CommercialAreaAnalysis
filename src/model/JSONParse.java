@@ -3,9 +3,13 @@ package model;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
+import model.dto.ChannelDTO;
+
 import model.dto.AreaChangeDTO;
 import model.dto.ChannelDTO;
 import model.dto.FootTrafficDetailDTO;
+
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;

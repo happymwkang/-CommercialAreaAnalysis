@@ -8,8 +8,12 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.Properties;
 
+
+import model.dao.ChannelDAO;
+
 import model.dao.AreaChangeDAO;
 import model.dao.FootTrafficDetailDAO;
+
 import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 
