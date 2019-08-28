@@ -2,7 +2,6 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.dto.PopCompDTO;
 import service.Service;
 
 @WebServlet("/commercial.do")
@@ -33,13 +31,14 @@ public class Controller extends HttpServlet {
 		String command = request.getParameter("command");
 		System.out.println(command);
 		try{
-			if(command.equals("probonoProjectAll")){
+			if(command.equals("getSelectArea")){
+				getSelectArea(request, response);
 			}else if(command.equals("insertAreas")){
 				System.out.println("시작");
 				readAreasFromAPI();
 				System.out.println("끝");
-			}else if(command.equals("getPopulationComposition")){
-				getPopulationComposition(request,response);
+			}else if(command.equals("getAll")){
+				getAll(request,response);
 			}else if(command.equals("getSalesAmount")){
 				getSalesAmount(request,response);
 			}else if(command.equals("activistInsert")){
@@ -54,20 +53,53 @@ public class Controller extends HttpServlet {
 		}
 	}
 	
-	public static void getPopulationComposition(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("1");
+	public static void getSelectArea(HttpServletRequest request, HttpServletResponse response) {
+		String url = "showError.jsp";
 		try {
-			String result = service.getPopSet("1000001");
+			String sigungu = request.getParameter("guNm");
+			String div = request.getParameter("divNm");
+			System.out.println("aaaaaaaa");
+			System.out.println(sigungu);
+			System.out.println(div);
+			String results = null;
+			if(div==null) {
+				results = service.getSelectDiv(sigungu);
+			}else {
+				results = service.getSelectArea(sigungu,div);
+			}
+			System.out.println(results);
+			request.setAttribute("sigungu", results);
+			url = "dataView.jsp";
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			request.getRequestDispatcher(url).forward(request, response);
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public static void getAll(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			String areaNm = request.getParameter("customSelect3");
+			System.out.println(areaNm);
+			
+			String result = service.getPopSet(areaNm);
 			request.setAttribute("popComp", result);
 			System.out.println(result);
 			//////////////////////
-			String result2 = service.getSalesAmount("1000001");
+			String result2 = service.getSalesAmount(areaNm);
 			System.out.println(result2);
 			request.setAttribute("salesAmounts", result2);
 
 			
 			
-			request.getRequestDispatcher("index.jsp").forward(request, response);
+			request.getRequestDispatcher("index2.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

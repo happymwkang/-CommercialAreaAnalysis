@@ -701,17 +701,41 @@ public class Service {
 		return builder.toString();
 	}
 	
-	
-//	public static void main(String[] args) {
-//		try {
-//			System.out.println(getSalesAmount("1000001"));
-//			
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}//static 지우기
-//		
-//		
-//	}
+	public String getSelectDiv(String sigungu) throws SQLException{
+		ArrayList<String> divSet =  areaDAO.getSelectDiv(sigungu);
 		
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
+		
+		for(int i = 0 ; i<divSet.size() ; i++) {
+			if(i!=divSet.size()-1) {
+				builder.append("'"+divSet.get(i)+"',");
+			}else {
+				builder.append("'"+divSet.get(i)+"'");
+			}
+			
+		}
+		builder.append("]");
+		System.out.println("service "+builder.toString());
+		return builder.toString();
+	}
+	
+	public String getSelectArea(String sigungu, String div) throws SQLException{
+		ArrayList<ArrayList<String>> divSet =  areaDAO.getSelectArea(sigungu, div);
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
+		
+		for(int i = 0 ; i<divSet.size() ; i++) {
+			if(i!=divSet.size()-1) {
+				builder.append("['"+divSet.get(0).get(i)+"','"+divSet.get(1).get(i)+"'],");
+			}else {
+				builder.append("['"+divSet.get(0).get(i)+"','"+divSet.get(1).get(i)+"']");
+			}
+			
+		}
+		builder.append("]");
+		System.out.println("service "+builder.toString());
+		return builder.toString();
+	}
 }
