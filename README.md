@@ -5,7 +5,7 @@
 
 
 # 팀원
-강민웅 [강민웅님의 깃허브 바로가기](https://github.com/happymwkang)
+강민웅 [강민웅님의 깃허브 바로가기](https://github.com/happymwkang)<br>
 최성국 [최성국님의 깃허브 바로가기](https://github.com/SunggookCHOI)
  
 # 프로젝트 일정관리
