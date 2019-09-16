@@ -32,6 +32,7 @@ Eclipse Java EE IDE for Web Developers Version: Photon Release (4.8.0)
 
 ### Main 
 <img src="readmeimg/Main.png"></img>
+<img src="readmeimg/Main2.png"></img>
 1. 구선택시 구가 보유중인 상권 카테고리를 select박스 형태로 제공 <br>
 2. 상권 카테고리 선택시 카테고리가 보유중인 상권명을 select박스 형태로 제공 <br>
 3. 상권명까지 선택한후 Search를 누르면 해당 상권의 데이터를 기반으로 차트제공.
@@ -40,6 +41,8 @@ Eclipse Java EE IDE for Web Developers Version: Photon Release (4.8.0)
 
 <img src="readmeimg/analysis1.png"></img>
 <img src="readmeimg/analysis2.png"></img>
+<img src="readmeimg/analysis3.png"></img>
+<img src="readmeimg/analysis4.png"></img>
 
 # 가설설정
 
