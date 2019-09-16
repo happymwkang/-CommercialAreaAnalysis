@@ -130,6 +130,14 @@ create table pop
 	pop VARCHAR2(100)
 );
 
+create table area(
+	division_code varchar2(100),
+	division_name varchar2(100),
+	area_code varchar2(20),
+	area_name varchar2(100),
+    sigungu varchar2(100)
+);
+
 alter table sales add constraint area_pk primary key(year, quater, area_code, business);
 
 ALTER TABLE sales  ADD FOREIGN KEY (area_code) REFERENCES area  (area_code);
