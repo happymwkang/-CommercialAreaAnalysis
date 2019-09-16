@@ -53,7 +53,7 @@ Eclipse Java EE IDE for Web Developers Version: Photon Release (4.8.0)
 # 출처
 ### 그래프
 
-Google / AnyChart
+Google Chart
 
 ### 데이터
 
