@@ -13,9 +13,9 @@
 
 # 사용 기술셋
 RDBMS : Oracle <br>
-Development Language : java / servlet / jsp / HTML / CSS /  /sql <br>
+Development Language : java / servlet / sql <br>
 Library: Lombok, Maven <br>
-Web Development : JSP / ajax / java script <br>
+Web Development : JSP / ajax / java script / HTML / CSS  <br>
 Tool : Google Chart  <br>
 
 # 개발 환경
