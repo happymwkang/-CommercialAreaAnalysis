@@ -1,15 +1,26 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
   <head>
    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
    <script type="text/javascript">
-      google.charts.load('current', {'packages':['gauge']});
+   
+   console.log("실험중여")
+      console.log( ${requestScope.getAllAreaChanIx});
+   ${requestScope.getAllAreaChanIx};
+   /* 
+   google.charts.load('current', {'packages':['gauge']});
       google.charts.setOnLoadCallback(drawChart);
-
+	
+      
+      
+      
       function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
           ['Label', 'Value'],
-          ['Memory', 80]
+          ['상권지표', 68]
         ]);
 
         var options = {
@@ -20,8 +31,13 @@
         };
 
         var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+
         chart.draw(data, options);
-      }
+        setInterval(function() {
+          data.setValue(2, 1, 60 );
+          chart.draw(data, options);
+        }, 26000);
+      } */
     </script>
   </head>
   <body>

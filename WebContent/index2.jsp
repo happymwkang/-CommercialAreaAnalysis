@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="utf-8">
 
 <head>
     <meta charset="UTF-8">
@@ -24,53 +24,39 @@
 	
 	<script type="text/javascript"
 		src="https://www.gstatic.com/charts/loader.js"></script>
-	<script type="text/javascript">
-		var index = -1;
-		
-		google.charts.load('current', {'packages' : [ 'bar' ]});
-		function drawChart() {
-			var b= [2,3];
-			b.unshift(1);
-			alert(b);
-			index +=1;
-			var chartData = ${requestScope.popComp}[index];
-			alert(chartData);
-			var data = google.visualization.arrayToDataTable(chartData[1]);
-			var options = {
-				title : chartData[0][0] + "ë " + chartData[0][1] + "ë¶ê¸° " + chartData[0][2] +"ì ìì£¼ì¸êµ¬"
-			};
-			var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-			chart.draw(data, google.charts.Bar.convertOptions(options));
-		}
-		
-		function drawChartBefore() {
-			index -=1;
-			var chartData = ${requestScope.popComp}[index];
-			var data = google.visualization.arrayToDataTable(chartData[1]);
-			var options = {
-				title : chartData[0][0] + "ë " + chartData[0][1] + "ë¶ê¸° " + chartData[0][2] +"ì ìì£¼ì¸êµ¬"
-			};
-			var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-			chart.draw(data, google.charts.Bar.convertOptions(options));
-		}
-		
-		
-		
-		function ajaxJSON() {
-			var a = ${requestScope.popComp}
-			console.log(typeof(a));
-			console.log(a[0]);
-			var xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-					var chartData = ${requestScope.popComp};
-					alert(chartData);
-					drawChart(chartData);
-				}
-			};
-		}
-		//ajaxJSON();
-	</script>
+	 <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawVisualization);
+
+      function drawVisualization() {
+        // Some raw data (not necessarily accurate)
+    /*     var data = google.visualization.arrayToDataTable([
+          ['Month', 'Bolivia', 'Ecuador', 'Madagascar', 'Papua New Guinea', 'Rwanda', 'Average'],
+          ['2004/05',  165,      938,         522,             998,           450,      614.6],
+          ['2005/06',  135,      1120,        599,             1268,          288,      682],
+          ['2006/07',  157,      1167,        587,             807,           397,      623],
+          ['2007/08',  139,      1110,        615,             968,           215,      609.4],
+          ['2008/09',  136,      691,         629,             1026,          366,      569.6]
+        ]); */
+        var chartData = ${requestScope.getChannelCnt[0]};
+        chartData.unshift(['업종','점포수']);
+        
+        var data = google.visualization.arrayToDataTable(chartData);
+        var options = {
+          width: 550,
+          height: 500,
+          title : '${requestScope.areaNm} 업종별 점포수' ,
+          vAxis: {title: '점포수'},
+          hAxis: {title: '업종'},
+          seriesType: 'bars',
+          series: {5: {type: 'line'}}
+        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById("Chart1"));
+        chart.draw(data, options);
+      }
+      
+    </script>
 </head>
 
 <body>
@@ -246,75 +232,6 @@
     </section>
     <!-- ***** Welcome Area End ***** -->
 
-    <!-- ***** Catagory Area Start ***** -->
-    <section class="dorne-catagory-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="all-catagories">
-                        <div class="row">
-                            <!-- Single Catagory Area -->
-                            <div class="col-12 col-sm-6 col-md">
-                                <div class="single-catagory-area wow fadeInUpBig" data-wow-delay="0.2s">
-                                    <div class="catagory-content">
-                                        <img src="img/core-img/icon-1.png" alt="">
-                                        <a href="#">
-                                            <h6>Hotels</h6>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single Catagory Area -->
-                            <div class="col-12 col-sm-6 col-md">
-                                <div class="single-catagory-area wow fadeInUpBig" data-wow-delay="0.4s">
-                                    <div class="catagory-content">
-                                        <img src="img/core-img/icon-2.png" alt="">
-                                        <a href="#">
-                                            <h6>Restaurants</h6>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single Catagory Area -->
-                            <div class="col-12 col-sm-6 col-md">
-                                <div class="single-catagory-area wow fadeInUpBig" data-wow-delay="0.6s">
-                                    <div class="catagory-content">
-                                        <img src="img/core-img/icon-3.png" alt="">
-                                        <a href="#">
-                                            <h6>Shopping</h6>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single Catagory Area -->
-                            <div class="col-12 col-sm-6 col-md">
-                                <div class="single-catagory-area wow fadeInUpBig" data-wow-delay="0.8s">
-                                    <div class="catagory-content">
-                                        <img src="img/core-img/icon-4.png" alt="">
-                                        <a href="#">
-                                            <h6>Beauty &amp; Spa</h6>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single Catagory Area -->
-                            <div class="col-12 col-md">
-                                <div class="single-catagory-area wow fadeInUpBig" data-wow-delay="1s">
-                                    <div class="catagory-content">
-                                        <img src="img/core-img/icon-5.png" alt="">
-                                        <a href="#">
-                                            <h6>Cinema</h6>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ***** Catagory Area End ***** -->
 
     <!-- ***** About Area Start ***** -->
     <section class="dorne-about-area section-padding-0-100">
@@ -353,8 +270,6 @@
                                 <a href="#">1643 Destinations</a>
                             </div>
                             <div>
-                            	<button onclick="drawChartBefore()">이전 분기</button>
-								<button onclick="drawChart()">다음 분기</button>
                             </div>
                             <div id="columnchart_material"></div>
                         </div>
